@@ -1,3 +1,12 @@
+## TO DO:
+
+-Develop best results desk;<br/>
+-Create config game file;<br/>
+-Rewrite code(hooks, redux);<br/>
+-Code refactoring;
+
+## Main
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
