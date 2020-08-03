@@ -15,7 +15,7 @@ export const App = () => {
   return (
     <div className="App">
       {!hidden && (
-        <div className="start-game">
+        <div className="game-control">
           <Button
             onClick={startGame}
             className="start-btn"

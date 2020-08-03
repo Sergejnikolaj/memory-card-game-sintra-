@@ -13,22 +13,25 @@ class Timer extends React.Component {
     clearInterval(this.timer);
   }
   tick() {
-    this.setState({ count: this.state.count + 1 });
-    if (this.props.stop === true) {
+    const { stop } = this.props;
+    const { count } = this.state;
+    this.setState({ count: count + 1 });
+    if (stop === true) {
       this.stopTimer();
     }
   }
   startTimer() {
     clearInterval(this.timer);
-    this.timer = setInterval(this.tick.bind(this), 3000);
+    this.timer = setInterval(this.tick.bind(this), 1000);
   }
   stopTimer() {
     clearInterval(this.timer);
   }
   render() {
+    const { count } = this.state;
     return (
       <div className="timer">
-        <h1>Time: {this.state.count}</h1>
+        <h1>Time: {count}</h1>
       </div>
     );
   }

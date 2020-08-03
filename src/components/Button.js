@@ -2,10 +2,11 @@ import React from "react";
 import "../index.scss";
 
 export const Button = (props) => {
+  const { title, className, onClick } = props;
   return (
     <>
-      <button onClick={props.onClick} className={props.className}>
-        {props.title}
+      <button onClick={onClick} className={className}>
+        {title}
       </button>
     </>
   );

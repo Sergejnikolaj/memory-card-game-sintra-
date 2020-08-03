@@ -87,48 +87,50 @@ class Desk extends React.Component {
   }
 
   incrementMoves(el) {
-    if (!this.state.usedCards.includes(el.props.id)) {
-      this.state.usedCards.push(el.props.id);
+    const {
+      usedCards,
+      moves,
+      cardsOpened,
+      memoryCard,
+      falseCounter,
+    } = this.state;
+    const {
+      props: { id, group },
+    } = el;
+    const newMemoryCard = { id, group };
+
+    if (!usedCards.includes(id)) {
+      usedCards.push(id);
       this.setState({
-        moves: this.state.moves + 1,
-        cardsOpened: this.state.cardsOpened + 1,
+        moves: moves + 1,
+        cardsOpened: cardsOpened + 1,
       });
     }
-    if (
-      el.props.group !== "Group single" &&
-      this.state.memoryCard.length == 0
-    ) {
-      const {
-        props: { id, group },
-      } = el;
-      const newMemoryCard = { id, group };
-      this.state.memoryCard.push(newMemoryCard);
-      this.setState({ cardsOpened: this.state.cardsOpened + 1 });
+    if (group !== "Group single" && memoryCard.length == 0) {
+      memoryCard.push(newMemoryCard);
+      this.setState({ cardsOpened: cardsOpened + 1 });
     } else if (
-      this.state.memoryCard[0] !== undefined &&
-      this.state.memoryCard[0].group === el.props.group &&
-      this.state.memoryCard[0].id !== el.props.id
+      memoryCard[0] !== undefined &&
+      memoryCard[0].group === el.props.group &&
+      memoryCard[0].id !== id
     ) {
       this.setState({ memoryCard: [] });
-    } else if (
-      el.props.group === "Group single" &&
-      this.state.memoryCard.length == 0
-    ) {
+    } else if (group === "Group single" && memoryCard.length == 0) {
       this.setState({
         memoryCard: [],
-        cardsOpened: this.state.cardsOpened + 1,
+        cardsOpened: cardsOpened + 1,
       });
-    } else if (this.state.memoryCard[0].group !== el.props.group) {
-      this.setState({ moves: this.state.moves + 1 });
-      this.setState({ falseCounter: this.state.falseCounter + 1 });
-      if (this.state.falseCounter === 2) {
+    } else if (memoryCard[0].group !== group) {
+      this.setState({ moves: moves + 1 });
+      this.setState({ falseCounter: falseCounter + 1 });
+      if (falseCounter === 2) {
         this.setState({
           gameOver: true,
           stopTimer: true,
         });
       }
-    } else if (this.state.memoryCard[0].id === el.props.id) {
-    } else if (this.state.cardsOpened > 8) {
+    } else if (memoryCard[0].id === id) {
+    } else if (cardsOpened > 8) {
       this.setState({
         stopTimer: true,
       });
@@ -142,29 +144,38 @@ class Desk extends React.Component {
   }
 
   render() {
+    const {
+      gameOver,
+      cardsOpened,
+      startTimer,
+      stopTimer,
+      moves,
+      cardArr,
+      memoryCard,
+    } = this.state;
     return (
       <div>
-        {(this.state.gameOver || this.state.cardsOpened > 8) && (
-          <Button
-            title={"RETRY GAME"}
-            className={"retry-btn"}
-            onClick={this.retryGame}
-          />
+        {(gameOver || cardsOpened > 8) && (
+          <div className="game-control">
+            <Button
+              title={"RETRY GAME"}
+              className={"retry-btn"}
+              onClick={this.retryGame}
+            />
+          </div>
         )}
-        {this.state.startTimer && (
-          <Timer stop={this.state.stopTimer || this.state.cardsOpened > 8} />
-        )}
+        {startTimer && <Timer stop={stopTimer || cardsOpened > 8} />}
         <div className="moves-qty">
-          <h1>Moves: {this.state.moves}</h1>
+          <h1>Moves: {moves}</h1>
         </div>
         <div className="desk">
-          {this.state.cardArr.map((card) => {
+          {cardArr.map((card) => {
             return (
               <Card
                 key={card.id}
                 id={card.id}
                 group={card.group}
-                memoryCard={this.state.memoryCard[0]}
+                memoryCard={memoryCard[0]}
                 incrementMoves={this.incrementMoves}
                 src={card.src}
               />
@@ -172,9 +183,9 @@ class Desk extends React.Component {
           })}
         </div>
         <div>
-          {this.state.gameOver ? (
+          {gameOver ? (
             <FinishModal className={"game-over"} message={"GAME OVER"} />
-          ) : this.state.cardsOpened > 8 ? (
+          ) : cardsOpened > 8 ? (
             <FinishModal className={"player-won"} message={"YOU WON"} />
           ) : null}
         </div>
