@@ -72,7 +72,6 @@ class Desk extends React.Component {
       gameOver: false,
       startTimer: false,
       cardsOpened: 0,
-      stopTimer: false,
     };
     this.incrementMoves = this.incrementMoves.bind(this);
     this.retryGame = this.retryGame.bind(this);
@@ -126,13 +125,12 @@ class Desk extends React.Component {
       if (falseCounter === 2) {
         this.setState({
           gameOver: true,
-          stopTimer: true,
         });
       }
     } else if (memoryCard[0].id === id) {
     } else if (cardsOpened > 8) {
       this.setState({
-        stopTimer: true,
+        gameOver: true,
       });
     } else {
       alert("SOMETHING WRONG :(");
@@ -148,7 +146,6 @@ class Desk extends React.Component {
       gameOver,
       cardsOpened,
       startTimer,
-      stopTimer,
       moves,
       cardArr,
       memoryCard,
@@ -156,7 +153,7 @@ class Desk extends React.Component {
     return (
       <div>
         {(gameOver || cardsOpened > 8) && (
-          <div className="game-control">
+          <div className="game-control retry-game">
             <Button
               title={"RETRY GAME"}
               className={"retry-btn"}
@@ -164,7 +161,9 @@ class Desk extends React.Component {
             />
           </div>
         )}
-        {startTimer && <Timer stop={stopTimer || cardsOpened > 8} />}
+        {startTimer && (
+          <Timer moves={moves} gameOver={gameOver || cardsOpened > 8} />
+        )}
         <div className="moves-qty">
           <h1>Moves: {moves}</h1>
         </div>

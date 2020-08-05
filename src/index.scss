@@ -109,7 +109,7 @@ body {
   .game-over,
   .player-won {
     position: fixed;
-    top: 223px;
+    top: 172px;
     width: 512px;
     border-radius: 10px;
     height: 600px;
@@ -126,14 +126,18 @@ body {
   .game-over {
     color: #ff6b6b;
   }
+  .game-control.retry-game {
+    width: 513px;
+  }
   .game-control {
     display: flex;
     justify-content: center;
     width: 513px;
     margin: 0 auto;
+    position: absolute;
+    width: 100%;
   }
   .moves-qty {
-    margin-bottom: 5%;
     display: flex;
     justify-content: center;
   }
@@ -152,5 +156,25 @@ body {
   }
   h1 {
     text-align: center;
+  }
+  .record-ol {
+    position: absolute;
+    top: 15%;
+    left: 0;
+
+    li {
+      padding: 5px;
+      font-size: 1.5em;
+    }
+    h2 {
+      text-align: center;
+    }
+  }
+  .timer {
+    margin-top: 50px;
+
+    h1 {
+      margin-bottom: 0;
+    }
   }
 }
