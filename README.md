@@ -1,6 +1,6 @@
 ## TO DO:
 
--Develop best results desk;<br/>
+-Develop best results desk(done);<br/>
 -Create config game file;<br/>
 -Rewrite code(hooks, redux);<br/>
 -Code refactoring;
